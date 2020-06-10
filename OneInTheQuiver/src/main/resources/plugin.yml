@@ -1,7 +1,0 @@
-name: OneInTheQuiver
-author: kmaxi
-main: me.kmaxi.oneInTheQuiver.OneInTheQuiverMain
-version: 1.0
-description: OneInTheQuiver plugin
-commands:
-  quiver:
