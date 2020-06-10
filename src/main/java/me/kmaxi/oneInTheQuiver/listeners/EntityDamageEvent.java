@@ -49,6 +49,7 @@ public class EntityDamageEvent implements Listener {
                 Score.killed(damaged, plugin);
                 Score.killSomeone(damager, plugin);
                 damaged.setHealth(20);
+                event.setDamage(0);
                 Bukkit.getServer().broadcastMessage(ChatColor.GRAY + damaged.getDisplayName() + ChatColor.YELLOW + " was killed by " + ChatColor.GRAY + damager.getName());
                 return;
             }

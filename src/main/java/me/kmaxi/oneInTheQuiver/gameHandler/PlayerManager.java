@@ -21,5 +21,9 @@ public class PlayerManager {
         this.kills++;
     }
 
+    public int getKills(){
+        return kills;
+    }
+
 
 }

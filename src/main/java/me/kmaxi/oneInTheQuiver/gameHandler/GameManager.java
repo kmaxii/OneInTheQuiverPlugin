@@ -8,6 +8,8 @@ import me.kmaxi.oneInTheQuiver.utils.SpawnLocations;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.DisplaySlot;
 
@@ -25,6 +27,7 @@ public class GameManager {
     public int gameTimeSeconds;
     public int gameTimeMinutes;
     public boolean isInGame;
+    public ArrayList<PlayerManager> allPlayers;
 
     public GameManager(OneInTheQuiverMain plugin){
         this.spawnLocations = new ArrayList<>();
@@ -33,8 +36,7 @@ public class GameManager {
         this.playerManager = new HashMap<>();
         this.inGameScoreboard = new InGameScoreboard();
         this.plugin = plugin;
-        this.gameTimeSeconds = 0;
-        this.gameTimeMinutes = 0;
+        this.allPlayers = new ArrayList<>();
     }
 
     public void setUpGame(){
@@ -44,7 +46,10 @@ public class GameManager {
             return;
         }
         spawn = (Location) plugin.getConfig().get("spawn");
+        gameTimeSeconds = 0;
+        gameTimeSeconds = 0;
         gameCountDown();
+
         return;
 
 
@@ -54,6 +59,8 @@ public class GameManager {
     public void startGame(){
         isStarted = true;
         isInGame = true;
+        gameTimeMinutes = 0;
+        gameTimeSeconds = 0;
         for (Player player: Bukkit.getServer().getOnlinePlayers()){
             UUID uuid = player.getUniqueId();
             playerManager.put(uuid, new PlayerManager(uuid, player));
@@ -65,8 +72,13 @@ public class GameManager {
             player.getInventory().addItem(new ItemStack(Material.BOW));
             player.getInventory().addItem(new ItemStack(Material.WOOD_SWORD));
             player.setGameMode(GameMode.ADVENTURE);
+            player.setWalkSpeed(0.2f);
             Score.killed(player, plugin);
         };
+        for (PlayerManager player: playerManager.values()){
+            allPlayers.add(player);
+        }
+
         Bukkit.getServer().getOnlinePlayers().forEach(player -> {
             inGameScoreboard.setBoard(player, plugin);
         });
@@ -78,12 +90,12 @@ public class GameManager {
 
         Bukkit.getOnlinePlayers().forEach(player -> {
             player.teleport(spawn);
+            player.setGameMode(GameMode.ADVENTURE);
         });
         new BukkitRunnable(){
             int time = 10;
             @Override
             public void run(){
-
                     if (time > 0){
                         Bukkit.getServer().getOnlinePlayers().forEach(player -> {
                             player.sendTitle(time + " seconds", "");
@@ -112,13 +124,13 @@ public class GameManager {
                 } else {
                     gameTimeSeconds++;
                 }
-                playerManager.values().forEach(playerManager1 -> {
-                    if(playerManager1.kills >= 20){
-                        endGame(playerManager1);
-                        cancel();
-                        return;
-                    }
-                });
+
+                if(!isStarted){
+                    cancel();
+                    return;
+                }
+
+                allPlayers.sort((playerA, playerB) -> playerB.getKills() - playerA.getKills());
             }
         }.runTaskTimer(plugin, 0, 20);
     }
@@ -126,6 +138,9 @@ public class GameManager {
     public void endGame(PlayerManager winner){ //Ends the game
         isStarted = false;
         Player winningPlayer = winner.player; //Gets the winning player
+        playerManager.values().forEach(playerManager1 -> {
+            playerManager1.player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 200, 100));
+        });
         Bukkit.getServer().broadcastMessage(ChatColor.GOLD + winningPlayer.getDisplayName() + " has won the game!"); //Announces the winner
         new BukkitRunnable(){
             int index = 0;
@@ -145,6 +160,7 @@ public class GameManager {
                         player.setGameMode(GameMode.ADVENTURE);
                     });
                     playerManager.clear();
+                    allPlayers.clear();
                     cancel();
                     return;
                 }

@@ -57,7 +57,7 @@ public class QuiverCommands implements CommandExecutor {
                     player.sendMessage(ChatColor.RED + "Please set a spawn point amount first using" + ChatColor.WHITE + "/quiver spawnpoints [amount]");
                 }
                     plugin.getConfig().set("point." + args[1], loc);
-                    player.sendMessage(ChatColor.GREEN + "Spawn point " + args[1] + ChatColor.WHITE + "/" + plugin.getConfig().get("spawnPointAmount") + ChatColor.GREEN + " succesfully located!");
+                    player.sendMessage(ChatColor.GREEN + "Spawn point " + ChatColor.WHITE + args[1]  + "/" + plugin.getConfig().get("spawnPointAmount") + ChatColor.GREEN + " succesfully located!");
                     plugin.saveConfig();
                     return true;
 

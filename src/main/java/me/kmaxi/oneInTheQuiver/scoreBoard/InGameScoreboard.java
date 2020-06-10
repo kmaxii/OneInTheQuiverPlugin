@@ -2,7 +2,6 @@ package me.kmaxi.oneInTheQuiver.scoreBoard;
 
 import me.kmaxi.oneInTheQuiver.OneInTheQuiverMain;
 import me.kmaxi.oneInTheQuiver.gameHandler.PlayerManager;
-import me.kmaxi.oneInTheQuiver.utils.GetPlayerInPosition;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -21,7 +20,7 @@ public class InGameScoreboard {
 
         Team time = board.registerNewTeam("time");
         time.addEntry(ChatColor.GRAY.toString());
-        setTeamString(time, ChatColor.GRAY + "Game time: (" + plugin.gameManager.gameTimeMinutes + ", " + plugin.gameManager.gameTimeSeconds + ")");
+        setTeamString(time, ChatColor.GRAY + "Game time: " + plugin.gameManager.gameTimeMinutes + ":" + plugin.gameManager.gameTimeSeconds);
         objective.getScore(ChatColor.GRAY.toString()).setScore(12);
 
         Score firstTo20Kills = objective.getScore(ChatColor.YELLOW + "First to 20 kills wins");
@@ -35,41 +34,54 @@ public class InGameScoreboard {
         Score empty = objective.getScore(" ");
         empty.setScore(9);
 
-        Team playerOne = board.registerNewTeam("firstPlayer");
-        playerOne.addEntry(ChatColor.GOLD.toString());
-        setTeamString(playerScore, ChatColor.GRAY + GetPlayerInPosition.get(0, plugin).player.getName() + ": " + GetPlayerInPosition.get(0, plugin).kills);
-        objective.getScore(ChatColor.GOLD.toString()).setScore(8);
+        Team playerOne = board.registerNewTeam("first");
+        playerOne.addEntry(ChatColor.DARK_GREEN.toString());
+        setTeamString(playerScore, ChatColor.GRAY + "1: " + plugin.gameManager.allPlayers.get(0) + ": " + plugin.gameManager.allPlayers.get(0).kills);
+        objective.getScore(ChatColor.DARK_GREEN.toString()).setScore(8);
 
-        Team playerTwo = board.registerNewTeam("secondPlayer");
+        Team playerTwo = board.registerNewTeam("second");
         playerTwo.addEntry(ChatColor.LIGHT_PURPLE.toString());
-        setTeamString(playerScore, ChatColor.GRAY + GetPlayerInPosition.get(1, plugin).player.getName() + ": " + GetPlayerInPosition.get(1, plugin).kills);
+        setTeamString(playerScore, ChatColor.GRAY + "2: " + plugin.gameManager.allPlayers.get(1).player.getName() + ": " + plugin.gameManager.allPlayers.get(1).kills);
         objective.getScore(ChatColor.LIGHT_PURPLE.toString()).setScore(7);
 
         if(Bukkit.getServer().getOnlinePlayers().size() > 2) {
-            Team playerThree = board.registerNewTeam("thirdPlayer");
+            Team playerThree = board.registerNewTeam("third");
             playerThree.addEntry(ChatColor.RED.toString());
-            setTeamString(playerScore, ChatColor.GRAY + GetPlayerInPosition.get(2, plugin).player.getName() + ": " + GetPlayerInPosition.get(2, plugin).kills);
+            setTeamString(playerScore, ChatColor.GRAY + "3: " + plugin.gameManager.allPlayers.get(2).player.getName() + ": " + plugin.gameManager.allPlayers.get(2).kills);
             objective.getScore(ChatColor.RED.toString()).setScore(6);
         }
 
         if(Bukkit.getServer().getOnlinePlayers().size() > 3) {
-            Team playerFour = board.registerNewTeam("fourthPlayer");
+            Team playerFour = board.registerNewTeam("fourth");
             playerFour.addEntry(ChatColor.DARK_PURPLE.toString());
-            setTeamString(playerScore, ChatColor.GRAY + GetPlayerInPosition.get(3, plugin).player.getName() + ": " + GetPlayerInPosition.get(3, plugin).kills);
+            setTeamString(playerScore, ChatColor.GRAY + "4: " + plugin.gameManager.allPlayers.get(3)+ ": " + plugin.gameManager.allPlayers.get(3).kills);
             objective.getScore(ChatColor.DARK_PURPLE.toString()).setScore(5);
         }
         if(Bukkit.getServer().getOnlinePlayers().size() > 4) {
-            Team playerFive = board.registerNewTeam("fifthPlayer");
+            Team playerFive = board.registerNewTeam("fifth");
             playerFive.addEntry(ChatColor.DARK_BLUE.toString());
-            setTeamString(playerScore, ChatColor.GRAY + GetPlayerInPosition.get(4, plugin).player.getName() + ": " + GetPlayerInPosition.get(4, plugin).kills);
+            setTeamString(playerScore, ChatColor.GRAY + "5: " + plugin.gameManager.allPlayers.get(4).player.getName() + ": " + plugin.gameManager.allPlayers.get(4).kills);
             objective.getScore(ChatColor.DARK_BLUE.toString()).setScore(4);
         }
+        if(Bukkit.getServer().getOnlinePlayers().size() > 5) {
+            Team playerFive = board.registerNewTeam("sixth");
+            playerFive.addEntry(ChatColor.GOLD.toString());
+            setTeamString(playerScore, ChatColor.GRAY + "6: " + plugin.gameManager.allPlayers.get(5).player.getName() + ": " + plugin.gameManager.allPlayers.get(5).kills);
+            objective.getScore(ChatColor.GOLD.toString()).setScore(3);
+        }
+        if(Bukkit.getServer().getOnlinePlayers().size() > 6) {
+            Team playerFive = board.registerNewTeam("seventh");
+            playerFive.addEntry(ChatColor.YELLOW.toString());
+            setTeamString(playerScore, ChatColor.GRAY + "7: " + plugin.gameManager.allPlayers.get(6).player.getName() + ": " + plugin.gameManager.allPlayers.get(6).kills);
+            objective.getScore(ChatColor.YELLOW.toString()).setScore(2);
+        }
+
 
         Score empty1 = objective.getScore("  ");
-        empty1.setScore(3);
+        empty1.setScore(1);
 
         Score server = objective.getScore(ChatColor.YELLOW + "kmaxi.mcserv.me");
-        server.setScore(2);
+        server.setScore(0);
 
         player.setScoreboard(board);
 
@@ -104,23 +116,36 @@ public class InGameScoreboard {
                     cancel();
                     return;
                 }
-                setTeamString(scoreboard.getTeam("time"), ChatColor.GRAY + "Game time: (" + plugin.gameManager.gameTimeMinutes + ", " + plugin.gameManager.gameTimeSeconds + ")");
+                setTeamString(scoreboard.getTeam("time"), ChatColor.GRAY + "Game time: " + plugin.gameManager.gameTimeMinutes + ":" + plugin.gameManager.gameTimeSeconds);
 
                 setTeamString(scoreboard.getTeam("playerScore"), ChatColor.YELLOW + "Your score: " + ChatColor.GOLD + playerManager.kills);
                 if (plugin.gameManager.playerManager.size() >= 1) {
-                    setTeamString(scoreboard.getTeam("firstPlayer"), ChatColor.GRAY + GetPlayerInPosition.get(0, plugin).player.getName() + ": " + GetPlayerInPosition.get(0, plugin).kills);
+                    PlayerManager player = plugin.gameManager.allPlayers.get(0);
+                    setTeamString(scoreboard.getTeam("first"), ChatColor.GRAY + "1: " + player.player.getName() + ": " + player.kills);
                 }
                 if (plugin.gameManager.playerManager.size() >= 2) {
-                    setTeamString(scoreboard.getTeam("secondPlayer"), ChatColor.GRAY + GetPlayerInPosition.get(1, plugin).player.getName() + ": " + GetPlayerInPosition.get(1, plugin).kills);
+                    PlayerManager player = plugin.gameManager.allPlayers.get(1);
+                    setTeamString(scoreboard.getTeam("second"), ChatColor.GRAY + "2: " + player.player.getName() + ": " + player.kills);
                 }
                 if(plugin.gameManager.playerManager.size() > 2) {
-                    setTeamString(scoreboard.getTeam("thirdPlayer"), ChatColor.GRAY + GetPlayerInPosition.get(2, plugin).player.getName() + ": " + GetPlayerInPosition.get(2, plugin).kills);
+                    PlayerManager player = plugin.gameManager.allPlayers.get(2);
+                    setTeamString(scoreboard.getTeam("third"), ChatColor.GRAY + "3: " + player.player.getName() + ": " + player.kills);
                 }
                 if(plugin.gameManager.playerManager.size()> 3) {
-                    setTeamString(scoreboard.getTeam("fourthPlayer"), ChatColor.GRAY + GetPlayerInPosition.get(3, plugin).player.getName() + ": " + GetPlayerInPosition.get(3, plugin).kills);
+                    PlayerManager player = plugin.gameManager.allPlayers.get(3);
+                    setTeamString(scoreboard.getTeam("fourth"), ChatColor.GRAY + "4: " + player.player.getName() + ": " + player.kills);
                 }
                 if(plugin.gameManager.playerManager.size() > 4) {
-                    setTeamString(scoreboard.getTeam("fifthPlayer"), ChatColor.GRAY + GetPlayerInPosition.get(4, plugin).player.getName() + ": " + GetPlayerInPosition.get(4, plugin).kills);
+                    PlayerManager player = plugin.gameManager.allPlayers.get(4);
+                    setTeamString(scoreboard.getTeam("fifth"), ChatColor.GRAY + "5: " + player.player.getName() + ": " + player.kills);
+                }
+                if((plugin.gameManager.playerManager.size() >  5)){
+                    PlayerManager player = plugin.gameManager.allPlayers.get(5);
+                    setTeamString(scoreboard.getTeam("sixth"), ChatColor.GRAY + "6: " +player.player.getName() + ": " + player.kills);
+                }
+                if((plugin.gameManager.playerManager.size() >  6)){
+                    PlayerManager player = plugin.gameManager.allPlayers.get(6);
+                    setTeamString(scoreboard.getTeam("seventh"), ChatColor.GRAY + "7: " + player.player.getName() + ": " + player.kills);
                 }
             }
         }.runTaskTimer(plugin, 0, 10);

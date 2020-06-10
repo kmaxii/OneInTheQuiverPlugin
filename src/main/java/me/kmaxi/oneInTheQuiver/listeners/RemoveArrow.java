@@ -18,13 +18,10 @@ public class RemoveArrow implements Listener {
     @EventHandler
     public void onHit(ProjectileHitEvent event){
         if(plugin.gameManager.isInGame){
-            Bukkit.getServer().broadcastMessage("Arrow hit");
             if (!(event.getEntity() instanceof Arrow)){
-                Bukkit.getServer().broadcastMessage("Not an arrow");
                 return;
             }
             Arrow arrow = (Arrow) event.getEntity();
-            Bukkit.getServer().broadcastMessage("removing arrow");
             arrow.remove();
 
         }
