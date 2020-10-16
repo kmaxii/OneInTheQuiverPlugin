@@ -1,7 +1,7 @@
-package me.kmaxi.oneInTheQuiver.listeners;
+package me.kmaxi.oneinthequiver.listeners;
 
-import me.kmaxi.oneInTheQuiver.OneInTheQuiverMain;
-import me.kmaxi.oneInTheQuiver.utils.Score;
+import me.kmaxi.oneinthequiver.OneInTheQuiverMain;
+import me.kmaxi.oneinthequiver.utils.Score;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Arrow;
@@ -10,7 +10,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
-import org.bukkit.event.entity.EntityDeathEvent;
 
 public class EntityDamageEvent implements Listener {
     OneInTheQuiverMain plugin;
@@ -34,6 +33,7 @@ public class EntityDamageEvent implements Listener {
                 Score.killed(damaged, plugin);
                 Score.killSomeone(shooter, plugin);
                 event.setDamage(0);
+                return;
             }
             if (!(event.getDamager() instanceof Player)){
                 return;
@@ -54,7 +54,11 @@ public class EntityDamageEvent implements Listener {
                 return;
             }
         }
+        if(!plugin.gameManager.isInGame){
+            event.setCancelled(true);
+        }
     }
+
 
 
 

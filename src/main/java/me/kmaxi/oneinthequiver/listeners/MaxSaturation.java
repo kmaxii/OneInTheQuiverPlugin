@@ -1,4 +1,4 @@
-package me.kmaxi.oneInTheQuiver.listeners;
+package me.kmaxi.oneinthequiver.listeners;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

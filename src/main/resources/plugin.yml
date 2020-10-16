@@ -1,6 +1,6 @@
 name: OneInTheQuiver
 author: kmaxi
-main: me.kmaxi.oneInTheQuiver.OneInTheQuiverMain
+main: me.kmaxi.oneinthequiver.OneInTheQuiverMain
 version: 1.0
 description: OneInTheQuiver plugin
 commands:

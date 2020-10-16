@@ -1,6 +1,6 @@
-package me.kmaxi.oneInTheQuiver.commands;
+package me.kmaxi.oneinthequiver.commands;
 
-import me.kmaxi.oneInTheQuiver.OneInTheQuiverMain;
+import me.kmaxi.oneinthequiver.OneInTheQuiverMain;
 
 public class Commands {
 

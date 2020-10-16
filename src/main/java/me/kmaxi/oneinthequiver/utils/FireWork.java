@@ -1,4 +1,4 @@
-package me.kmaxi.oneInTheQuiver.utils;
+package me.kmaxi.oneinthequiver.utils;
 
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;

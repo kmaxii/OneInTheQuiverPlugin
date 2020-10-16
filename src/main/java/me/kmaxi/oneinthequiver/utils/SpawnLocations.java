@@ -1,8 +1,7 @@
-package me.kmaxi.oneInTheQuiver.utils;
+package me.kmaxi.oneinthequiver.utils;
 
-import me.kmaxi.oneInTheQuiver.OneInTheQuiverMain;
+import me.kmaxi.oneinthequiver.OneInTheQuiverMain;
 import org.bukkit.Location;
-import org.bukkit.World;
 
 import java.util.ArrayList;
 

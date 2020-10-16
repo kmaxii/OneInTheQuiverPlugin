@@ -1,12 +1,10 @@
-package me.kmaxi.oneInTheQuiver.listeners;
+package me.kmaxi.oneinthequiver.listeners;
 
-import me.kmaxi.oneInTheQuiver.OneInTheQuiverMain;
-import org.bukkit.Bukkit;
+import me.kmaxi.oneinthequiver.OneInTheQuiverMain;
 import org.bukkit.entity.Arrow;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.ProjectileHitEvent;
-import org.bukkit.util.Vector;
 
 public class RemoveArrow implements Listener {
     OneInTheQuiverMain plugin;

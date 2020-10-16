@@ -1,7 +1,7 @@
-package me.kmaxi.oneInTheQuiver.scoreBoard;
+package me.kmaxi.oneinthequiver.scoreboard;
 
-import me.kmaxi.oneInTheQuiver.OneInTheQuiverMain;
-import me.kmaxi.oneInTheQuiver.gameHandler.PlayerManager;
+import me.kmaxi.oneinthequiver.OneInTheQuiverMain;
+import me.kmaxi.oneinthequiver.gamehandler.PlayerManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -27,28 +27,28 @@ public class InGameScoreboard {
         firstTo20Kills.setScore(11);
 
         Team playerScore = board.registerNewTeam("playerScore");
-        playerScore.addEntry(ChatColor.AQUA.toString());
+        playerScore.addEntry(ChatColor.GRAY.toString() + ChatColor.GRAY.toString());
         setTeamString(playerScore, ChatColor.YELLOW + "Your score: " + ChatColor.GOLD + playerManager.kills);
-        objective.getScore(ChatColor.AQUA.toString()).setScore(10);
+        objective.getScore(ChatColor.GRAY.toString() + ChatColor.GRAY.toString()).setScore(10);
 
         Score empty = objective.getScore(" ");
         empty.setScore(9);
 
         Team playerOne = board.registerNewTeam("first");
-        playerOne.addEntry(ChatColor.DARK_GREEN.toString());
+        playerOne.addEntry(ChatColor.GRAY.toString() + ChatColor.GRAY.toString() + ChatColor.GRAY.toString());
         setTeamString(playerScore, ChatColor.GRAY + "1: " + plugin.gameManager.allPlayers.get(0) + ": " + plugin.gameManager.allPlayers.get(0).kills);
-        objective.getScore(ChatColor.DARK_GREEN.toString()).setScore(8);
+        objective.getScore(ChatColor.GRAY.toString() + ChatColor.GRAY.toString() + ChatColor.GRAY.toString()).setScore(8);
 
         Team playerTwo = board.registerNewTeam("second");
-        playerTwo.addEntry(ChatColor.LIGHT_PURPLE.toString());
+        playerTwo.addEntry(ChatColor.GRAY.toString() + ChatColor.GRAY.toString() + (ChatColor.GRAY.toString() + ChatColor.GRAY.toString()));
         setTeamString(playerScore, ChatColor.GRAY + "2: " + plugin.gameManager.allPlayers.get(1).player.getName() + ": " + plugin.gameManager.allPlayers.get(1).kills);
-        objective.getScore(ChatColor.LIGHT_PURPLE.toString()).setScore(7);
+        objective.getScore(ChatColor.GRAY.toString() + ChatColor.GRAY.toString() + (ChatColor.GRAY.toString() + ChatColor.GRAY.toString())).setScore(7);
 
         if(Bukkit.getServer().getOnlinePlayers().size() > 2) {
             Team playerThree = board.registerNewTeam("third");
-            playerThree.addEntry(ChatColor.RED.toString());
+            playerThree.addEntry(ChatColor.GRAY.toString() + ChatColor.GRAY.toString() + ChatColor.GRAY.toString() + ChatColor.GRAY.toString() + ChatColor.GRAY.toString());
             setTeamString(playerScore, ChatColor.GRAY + "3: " + plugin.gameManager.allPlayers.get(2).player.getName() + ": " + plugin.gameManager.allPlayers.get(2).kills);
-            objective.getScore(ChatColor.RED.toString()).setScore(6);
+            objective.getScore(ChatColor.GRAY.toString() + ChatColor.GRAY.toString() + ChatColor.GRAY.toString() + ChatColor.GRAY.toString() + ChatColor.GRAY.toString()).setScore(6);
         }
 
         if(Bukkit.getServer().getOnlinePlayers().size() > 3) {
@@ -86,11 +86,9 @@ public class InGameScoreboard {
         player.setScoreboard(board);
 
         updateScoreboard(player, playerManager, plugin);
-
-
     }
 
-    private static void setTeamString(Team team, String text) {
+    private void setTeamString(Team team, String text) {
         String s = text;
         if (s.length() <= 16) {
             team.setPrefix(s);
@@ -112,7 +110,6 @@ public class InGameScoreboard {
             public void run() {
                 if(!(player.isOnline() || plugin.gameManager.isInGame)) {
                     player.getScoreboard().clearSlot(DisplaySlot.SIDEBAR);
-                    player.sendMessage("You scoreboard has been cleared");
                     cancel();
                     return;
                 }
